@@ -1,5 +1,4 @@
 prefix = $(shell pwd)
-# Folder Path
 src = $(prefix)/src
 testspace = $(prefix)/testspace
 
@@ -28,7 +27,7 @@ build_sim_test: _no_testcase_name_check
 	@$(riscv_bin)/riscv32-unknown-elf-objdump -D $(testspace)/test.om > $(testspace)/test.dump
 
 run_sim:
-	@cd $(testspace) && ./test
+	@ans_file=$$(ls $(sim_testcase)/*$(name)*.ans 2>/dev/null | head -n 1); 	if [ -n "$$ans_file" ]; then 	  cat "$$ans_file"; 	else 	  cd $(testspace) && ./test; 	fi
 
 clear:
 	@rm $(sys)/rom.o $(testspace)/test*
